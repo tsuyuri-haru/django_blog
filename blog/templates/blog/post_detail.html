@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+{% extends 'blog/base.html' %}
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+    {% block content %}
+    <div class="post">
+
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.text|linebreaksbr }}</p>
+        {% if post.published_date %}
+        <div class="date">
+            公開日 : {{ post.published_date }}
+        </div>
+        {% endif %}
+    </div>
+    {% endblock %}
+
+</body>
+</html>
