@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    
+    <form method="POST" action="{% url 'Create_account' %}">
+        {% csrf_token %}
+        <label>ユーザーID</label>
+        {{ form.username }}
+        {{ form.username.errors }}
+        <label>パスワード</label>
+        {{ form.password1 }}
+        {{ form.password1.errors }}
+        <label>パスワード(確認)</label>
+        {{ form.password2 }}
+        {{ form.password2.errors }}
+        <button type="submit">登録</button>
+
+    </form>
+    
+</body>
+</html>
