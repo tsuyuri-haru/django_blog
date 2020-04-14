@@ -6,12 +6,15 @@ from .forms import PostForm
 from django.shortcuts import redirect
 from django.contrib.auth.views import LoginView,LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.contrib import auth
 from django.views import generic
 from . forms import UserCreateForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.views.generic import CreateView
+from .forms import LoginForm
+from . forms import UserCreateForm
+from django.views.generic import View
 # Create your views here.
 
 
@@ -41,8 +44,6 @@ def post_new(request):
 
 
 
-def login_form(request):
-    return render(request, 'blog/loginform.html',{})
 
 class Create_account(CreateView):
     def post(self,request, *args, **kwargs):
@@ -61,3 +62,21 @@ class Create_account(CreateView):
         return render(request, 'blog/create.html', {'form': form,})
 
 create_account = Create_account.as_view()
+
+
+
+class Account_login(View):
+    def post(self, request, *arg, **kwargs):
+        form = LoginForm(data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            user = User.objects.get(username=username)
+            login(request, user)
+            return redirect('/')
+        return render(request, 'blog/loginform.html', {})
+
+    def get(self, request, *args, **kwargs):
+        form = LoginForm(request.POST)
+        return render(request, 'blog/loginform.html', {})
+
+account_login = Account_login.as_view()
